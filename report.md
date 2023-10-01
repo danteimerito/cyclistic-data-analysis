@@ -53,7 +53,7 @@ color_member <- "#00204D"
 color_casual <- "#6699FF"
 ```
 
-## Cleaning & Manipulation of Data
+# Cleaning & Manipulation of Data
 
 ``` r
 # Load the past 12 months of Cyclistic's historical data into data frames
@@ -247,7 +247,7 @@ data <- left_join(data, end_stations)
 rm(start_stations, end_stations)
 ```
 
-## Issues with the data
+# Issues with the data
 
 ## Missing start station names and/or end station names
 
@@ -339,11 +339,7 @@ trunc_coords_end <- data %>%
 # Set bounding box & import map
 bbox = c(top = 42.1196, right = -87.3097, bottom = 41.5672, left = -88.1007)
 import_map <- get_map(bbox, maptype = "terrain", source = "stamen", zoom = 10)
-```
 
-    ## ℹ Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.
-
-``` r
 # plot truncated coordinates on map
 ggmap(import_map) +
   geom_point(data = trunc_coords_start, mapping = aes(x = start_lng, y = start_lat), size = 0.5, color = "navyblue") +
@@ -351,11 +347,10 @@ ggmap(import_map) +
    scale_color_distiller(palette = 1, direction = 1) +
   labs(title = "Truncated station coordinates", subtitle = "Present for over 1.4M rides", caption = "") +
   theme_map()
+  ggsave("img/truncated-coords.png")
 ```
 
-    ## Warning: Removed 10 rows containing missing values (`geom_point()`).
-
-![](report_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+![](img/truncated-coords.png)
 
 ## Map of inaccurate station coordinates
 
@@ -373,19 +368,16 @@ start_coordinates <- data %>%
 
 bbox = c(top = 42.1196, right = -87.3097, bottom = 41.5672, left = -88.1007)
 import_map <- get_map(bbox, maptype = "terrain", source = "stamen", zoom = 10)
-```
 
-    ## ℹ Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.
-
-``` r
 ggmap(import_map) +
   geom_point(data = start_coordinates, mapping = aes(x = start_lng, y = start_lat), color = "darkred", alpha = 0.45) +
   labs(title = "Inaccurate station coordinates", subtitle = "Streeter Dr & Grand Ave", caption = "") + 
   theme_map() +
   theme(plot.title = element_text(size = 13.5))
+  ggsave("img/innacurate-coords.png")
 ```
 
-![](report_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](img/innacurate-coords.png)
 
 ## Publicly available station listing
 
@@ -398,18 +390,15 @@ station.
 ``` r
 bbox = c(top = 42.1196, right = -87.3097, bottom = 41.5672, left = -88.1007)
 import_map <- get_map(bbox, maptype = "terrain", source = "stamen", zoom = 10)
-```
 
-    ## ℹ Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.
-
-``` r
 ggmap(import_map) +
   geom_point(data = stations_divvy, mapping = aes(x = Longitude, y = Latitude), size = 0.5, color = "darkgreen", alpha = 0.75) +
   labs(title = "Publicly available station listing", caption = "Data provided by Chicago Data Portal") +
   theme_map()
+  ggsave("img/divvy-listing.png")
 ```
 
-![](report_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](img/divvy-listing.png)
 
 There are several stations that are not listed in Chicago’s Data Portal
 but do exist in the Cyclistic ride share data. These additional stations
@@ -429,21 +418,18 @@ coordinates <- data %>% filter(start_station_name == "Streeter Dr & Grand Ave")
 
 bbox = c(top = 42.1196, right = -87.3097, bottom = 41.5672, left = -88.1007)
 import_map <- get_map(bbox, maptype = "terrain", source = "stamen", zoom = 10)
-```
 
-    ## ℹ Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.
-
-``` r
 ggmap(import_map) +
   geom_point(data = coordinates, mapping = aes(x = start_station_lng, y = start_station_lat), color = "darkred", alpha = 0.45) +
   labs(title = "Corrected station coordinates", subtitle = "Streeter Dr & Grand Ave", caption = "") + 
   theme_map() +
   theme(plot.title = element_text(size = 13.5))
+  ggsave("img/corrected-coords.png")
 ```
 
-![](report_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](img/corrected-coords.png)
 
-## Summary of Analysis
+# Summary of Analysis
 
 ## Total rides
 
@@ -463,9 +449,10 @@ data %>%
     labs(x = "", y = "Rides", title = "Total rides") +
     theme_classic() +
     theme(legend.position = "none")
+    ggsave("img/total-rides.png")
 ```
 
-![](report_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](img/total-rides.png)
 
 ## Average ride length
 
@@ -484,9 +471,10 @@ data %>%
   labs(x = "", y = "Average Ride Length (Mins)", title = "Average Ride Length (Minutes)", subtitle = "") +
   theme_classic() +
   theme(legend.position = "none")
+  ggsave("img/avg-ride-length.png")
 ```
 
-![](report_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](img/avg-ride-length.png)
 
 ## Rides by bike type
 
@@ -506,9 +494,10 @@ data %>%
     labs(x = "", y = "Rides", title = "Rides by bike type") +
     theme_classic() +
     theme(legend.title = element_blank()) 
+    ggsave("img/rides-by-bike-type.png")
 ```
 
-![](report_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](img/rides-by-bike-type.png)
 
 ## Docked bikes
 
@@ -538,9 +527,10 @@ data %>%
     labs(x = "", y = "Average Ride Length (Minutes)", title = "Average ride length by bike type", subtitle = "") + 
     theme_classic() +
     theme(legend.title = element_blank())
+    ggsave("img/avg-ride-length-by-bike-type.png")
 ```
 
-![](report_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](img/avg-ride-length-by-bike-type.png)
 
 ## Rides per month
 
@@ -562,9 +552,10 @@ ggplot() +
  labs(x = "", y = "Rides", title = "Rides per month", subtitle = "") +
   theme_classic() +
   theme(legend.title = element_blank())
+  ggsave("img/rides-per-month.png")
 ```
 
-![](report_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](img/rides-per-month.png)
 
 ## Rides by Day of week
 
@@ -581,15 +572,10 @@ ggplot(data) +
   labs(x = "", y = "Rides", title = "Rides by day of week", subtitle = "") +
   theme_classic() +
   theme(legend.title = element_blank())
+  ggsave("img/rides-by-day-of-week.png")
 ```
 
-    ## Warning: `label_number_si()` was deprecated in scales 1.2.0.
-    ## ℹ Please use the `scale_cut` argument of `label_number()` instead.
-    ## This warning is displayed once every 8 hours.
-    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-    ## generated.
-
-![](report_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](img/rides-by-day-of-week.png)
 
 ## Rides by Time of Day
 
@@ -608,9 +594,10 @@ ggplot(data) +
   labs(x = "", y = "Rides", title = "Rides by Time of Day", subtitle = "") +
   theme_classic() +
   theme(legend.title = element_blank()) 
+  ggsave("img/rides-by-time-of-day.png")
 ```
 
-![](report_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](img/rides-by-time-of-day.png)
 
 ## Avgerage Ride Length by Time of Day
 
@@ -634,9 +621,10 @@ data %>%
     labs(x = "", y = "Average Ride Length (Minutes)", title = "Average Ride Length by Time of Day", subtitle = "") + 
     theme_classic() +
     theme(legend.title = element_blank())
+    ggsave("img/avg-ride-length-by-time-of-day.png")
 ```
 
-![](report_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](img/avg-ride-length-by-time-of-day.png)
 
 ## Ride density maps
 
@@ -661,11 +649,7 @@ stns <- data %>%
 # set bounding box and import map
 bbox = c(top = 42.05, right = -87.4, bottom = 41.65, left = -88)
 import_map <- get_map(bbox, maptype = "terrain", source = "stamen", zoom = 11)
-```
 
-    ## ℹ Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.
-
-``` r
 # plot map
 ggmap(import_map) +
   geom_density_2d_filled(data = stns, mapping = aes(x = start_station_lng, y = start_station_lat), color = "black", alpha = 0.55) +
@@ -674,12 +658,10 @@ ggmap(import_map) +
   theme( axis.text.x = element_blank(),
     axis.text.y = element_blank()
   )
+  ggsave("img/ride-density-maps-2.png")
 ```
 
-    ## Warning: Removed 16 rows containing non-finite values
-    ## (`stat_density2d_filled()`).
-
-![](report_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](img/ride-density-maps-2.png)
 
 ## Top 10 starting stations for members and casuals
 
@@ -725,11 +707,7 @@ top_stations_casuals <- data %>%
 # set bounding box and import map
 bbox = c(top = 41.9825, right = -87.5, bottom = 41.75, left = -87.9002)
 import_map <- get_map(bbox, maptype = "terrain", source = "stamen", zoom = 11)
-```
 
-    ## ℹ Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.
-
-``` r
 # plot map
 ggmap(import_map) +
   geom_point(data = top_stations_members, mapping = aes(x = start_station_lng, y = start_station_lat, size = Rides, color = member_casual), alpha = 0.75) +
@@ -738,9 +716,10 @@ ggmap(import_map) +
   scale_color_manual(values=c(color_casual, color_member), name="Rider Type") +
   theme_map() +
   theme(plot.title = element_text(size = 13.5))
+  ggsave("img/top-10-start-stations-for-members+casuals.png")
 ```
 
-![](report_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](img/top-10-start-stations-for-members+casuals.png)
 
 ## Top 10 routes most frequently traveled by members
 
@@ -762,9 +741,10 @@ data %>%
   labs(x = "", y = "Rides", title = "Routes most frequently traveled by members", subtitle = "") + 
   theme_classic() +
   theme(legend.title = element_blank())
+  ggsave("img/top-10-routes-most-frequently-traveled-by-members.png")
 ```
 
-![](report_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](img/top-10-routes-most-frequently-traveled-by-members.png)
 
 ## Map of top 10 routes most frequently traveled by members
 
@@ -788,11 +768,7 @@ popular_routes <- data %>%
 # set bounding box and import map
 bbox = c(top = 41.95, right = -87.35, bottom = 41.72, left = -87.7275)
 import_map <- get_map(bbox, maptype = "terrain", source = "stamen", zoom = 11)
-```
 
-    ## ℹ Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.
-
-``` r
 # plot map
 ggmap(import_map) +
   geom_point(data = popular_routes, mapping = aes(x = start_station_lng, y = start_station_lat, size = n), color = color_member, alpha = 0.45) +
@@ -805,9 +781,10 @@ ggmap(import_map) +
   labs(title = "Routes most frequently traveled by members", caption = "") + 
   theme_map() +
   theme(plot.title = element_text(size = 13.5))
+  ggsave("img/map-of-top-10-routes-most-freq-trav-members.png")
 ```
 
-![](report_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](img/map-of-top-10-routes-most-freq-trav-members.png)
 
 ## Top 10 routes most frequently traveled by casuals
 
@@ -831,9 +808,10 @@ data %>%
   labs(x = "", y = "Rides", title = "Most frequently traveled routes for Casuals", subtitle = "") + 
   theme_classic() +
   theme(legend.title = element_blank())
+  ggsave("img/top-10-routes-most-frequently-traveled-by-casuals.png")
 ```
 
-![](report_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+![](img/top-10-routes-most-frequently-traveled-by-casuals.png)
 
 ## Map of top 10 most frequently traveled routes by Casuals
 
@@ -853,11 +831,7 @@ popular_routes <- data %>%
 
 bbox = c(top = 41.9825, right = -87.5, bottom = 41.75, left = -87.9002)
 import_map <- get_map(bbox, maptype = "terrain", source = "stamen", zoom = 11)
-```
 
-    ## ℹ Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.
-
-``` r
 # plot map
 ggmap(import_map) +
   geom_point(data = popular_routes, mapping = aes(x = start_station_lng, y = start_station_lat, size = n), color = color_member, alpha = 0.45) +
@@ -865,9 +839,10 @@ ggmap(import_map) +
   labs(title = "Routes most frequently traveled by casuals", caption = "") + 
   theme_map() +
   theme(plot.title = element_text(size = 13.5))
+  ggsave("img/map-of-top-10-most-frequently-traveled-routes-by-casuals.png")
 ```
 
-![](report_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](img/map-of-top-10-most-frequently-traveled-routes-by-casuals.png)
 
 # Conclusions
 
