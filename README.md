@@ -6,7 +6,7 @@ The premise of the study is that Cyclistic is trying to grow their business by d
 
 The data provided for analysis includes 1 year of bicycle trip data spanning the months of July 2022 through June 2023. Station location information was also sourced from the City of Chicago Data Portal as well as through the use of online maps.
 
-I welcome you to [read the study](https://github.com/danteimerito/cyclistic-data-analysis/blob/main/report.md)
+I welcome you to [read the study here](https://github.com/danteimerito/cyclistic-data-analysis/blob/main/report.md).
 
 Thanks,
 
