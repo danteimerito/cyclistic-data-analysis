@@ -13,7 +13,7 @@ The data provided for analysis includes 1 year of bicycle trip data spanning the
 I welcome you to explore my findings below.
 
 Thanks,
-Dante Imerito
+Dante
 
 ## Business Task
 
